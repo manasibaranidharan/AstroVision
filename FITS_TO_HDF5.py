@@ -90,12 +90,17 @@ def fits_to_hdf5(fits_path, patch_size=64, step=64, resize_to=None, output_dir="
     print("Conversion complete:")
     print(f"Train: {len(X_train)}, Val: {len(X_val)}, Test: {len(X_test)}")
 
+directory_path = './raw_data/M31/'
+files_and_dirs = os.listdir(directory_path)
 
-fits_to_hdf5(
-    "testdata/M33_NIRCAM/MAST_2025-08-01T1242/JWST/jw02211047001_08201_00003_nrcblong/jw02211047001_08201_00003_nrcblong_i2d.fits",
-    patch_size=64,
-    resize_to=(64, 64),
-    step=64,
-    use_rgb=True,
-    output_dir="Train/dataset/."
+for item in files_and_dirs:
+    full_path = os.path.join(directory_path, item)
+    if os.path.isfile(full_path):  
+        fits_to_hdf5(
+        full_path,
+        patch_size=64,
+        resize_to=(64, 64),
+        step=64,
+        use_rgb=True,
+        output_dir="Train/dataset/."
 )
